@@ -1,0 +1,378 @@
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #111; /* dark background */
+  color: white;
+  font-weight: 700; /* all text bold */
+  overflow-x: hidden;
+}
+
+/* Container for layout */
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar styles */
+.sidebar {
+  background: #1a1a1a;
+  width: 240px;
+  padding: 60px 0;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  border-right: 4px solid #f6b10a; /* yellow vertical line */
+  box-shadow: 2px 0 10px #000;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.sidebar ul li {
+  margin: 28px 0;
+  position: relative;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  padding-left: 15px;
+  display: block;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.sidebar ul li a::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 5px;
+  height: 100%;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover::after,
+.sidebar ul li a.active::after {
+  background-color: #f6b10a;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+  color: #f6b10a;
+}
+
+/* Main content area */
+main.main {
+  margin-left: 260px; /* leave space for sidebar */
+  padding: 80px 60px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #222; /* dark background */
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  font-weight: 700;
+}
+
+/* Content panel */
+.content-panel {
+  max-width: 900px;
+  background: rgba(246, 177, 10, 0.15);
+  border: 2px solid #f6b10a;
+  border-radius: 15px;
+  padding: 50px 70px;
+  color: white;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 80px;
+  box-shadow: 0 0 40px #f6b10a88;
+  font-weight: 700;
+}
+
+/* Titles */
+.content-panel h2 {
+  font-weight: 900;
+  font-size: 2.8rem;
+  margin-bottom: 25px;
+  color: #f6b10a;
+  text-align: center;
+}
+
+.content-panel h3 {
+  margin-top: 25px;
+  color: #f6b10a;
+  font-weight: 900;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 0;
+  font-size: 24px;
+  letter-spacing: 1.5px;
+  color: white;
+  font-weight: 700;
+}
+
+.stats div {
+  text-align: center;
+}
+
+.stats div span {
+  display: block;
+  font-size: 48px;
+  color: #f6b10a;
+}
+
+.btn-donate {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;  /* ensure it’s above other elements */
+}
+
+.btn-contact {
+    position: fixed;
+    top: 20px;
+    right: 100px; /* place it left of Donate */
+    z-index: 9999;
+}
+
+.btn-donate {
+    background: linear-gradient(45deg, #ffeb3b, #f6b10a);
+    border: none;
+    padding: 12px 25px;
+    font-weight: 900;
+    color: #111;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.4s ease-in-out;
+    box-shadow:
+      0 0 10px #f6b10a,
+      0 0 20px #f6b10a,
+      0 0 30px #f6b10a,
+      inset 0 0 10px #fff;
+    user-select: none;
+  }
+  
+  .btn-donate:hover {
+    background: linear-gradient(45deg, #fff973, #d99e00);
+    box-shadow:
+      0 0 20px #fff,
+      0 0 40px #fff,
+      0 0 60px #f6b10a,
+      inset 0 0 15px #fff;
+    color: #111;
+  }
+/* Donation amounts styling inside popup */
+.donate-amounts button {
+  background-color: white;
+  color: #222;
+  margin: 0 10px;
+  font-weight: 700;
+  border-radius: 25px;
+  padding: 10px 25px;
+  cursor: pointer;
+  border: none;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.donate-amounts button.yellow {
+  background-color: #f6b10a;
+  color: #222;
+}
+
+.donate-amounts button:hover {
+  filter: brightness(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 4px solid #f6b10a;
+    padding: 20px 0;
+  }
+  
+  main.main {
+    margin-left: 0;
+    padding: 40px 20px;
+  }
+
+  .stats {
+    flex-direction: column;
+  }
+}
+.donation-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+  }
+  
+  .donation-popup {
+    background: #1a1a1a;
+    display: flex;
+    gap: 20px;
+    padding: 40px;
+    border-radius: 20px;
+    position: relative;
+    max-width: 1200px;
+    overflow-x: auto;
+    box-shadow: 0 0 40px #f6b10a88;
+  }
+  
+  .plan {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 30px 20px;
+    width: 220px;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 400px;
+  }
+  
+  .plan h2 {
+    font-size: 2rem;
+    margin: 0 0 10px;
+    color: #f6b10a;
+  }
+  
+  .plan h2 small {
+    font-size: 1rem;
+    color: #ccc;
+  }
+  
+  .plan h3 {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+  }
+  
+  .plan p {
+    font-size: 0.9rem;
+    margin: 6px 0;
+  }
+  
+  .plan .spacer {
+    flex-grow: 1;
+  }
+  
+  .plan .choose-btn {
+    margin-top: 20px;
+    background: #f6b10a;
+    color: #222;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+    transition:  0.3s ease;
+  }
+  
+  .plan .choose-btn:hover {
+    background: #ffce3d;
+  }
+  
+  .plan.pro {
+    background: #f6b10a;
+    color: #111;
+  }
+  
+  .plan.pro h2, .plan.pro h3, .plan.pro p {
+    color: #111;
+  }
+  
+  .donation-popup {
+    background: #1a1a1a;
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+    border-radius: 20px;
+    position: relative;
+    max-width: 1200px;
+    overflow-x: auto;
+    box-shadow: 0 0 40px #f6b10a88;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .btn-contact {
+    position: fixed;
+    top: 20px;
+    right: 120px; /* 100px or more space to the left of Donate */
+    z-index: 9999;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(135deg, #7289da, #4b6cb7);
+    transition:  0.3s ease;
+}
+
+.btn-contact:hover {
+    background: linear-gradient(135deg, #5b6eae, #3b5ba5);
+}
+
+.sidebar {
+    padding-left: 5px;  /* reduce this from higher value like 20px */
+}
+
+.code-block {
+    margin-left: 0;     /* remove extra margin if exists */
+    padding-left: 10px; /* control how close code is to lines */
+}
+
+.gutter {
+    width: 10px; /* reduce width, default might be like 20-30px */
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.code-line::before {
+    left: 5px;  /* Move the line closer to code */
+}
